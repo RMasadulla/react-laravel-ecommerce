@@ -2,7 +2,7 @@ import InputError from "@/Components/Core/InputError";
 import InputLabel from "@/Components/Core/InputLabel";
 import PrimaryButton from "@/Components/Core/PrimaryButton";
 import TextInput from "@/Components/Core/TextInput";
-import GuestLayout from "@/Layouts/GuestLayout";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { FormEventHandler } from "react";
 
@@ -23,91 +23,102 @@ export default function Register() {
   };
 
   return (
-    <GuestLayout>
+    <AuthenticatedLayout>
       <Head title="Register" />
+      <section className=" flex justify-center items-center mt-10">
+        <div className="w-full md:w-1/3 mx-4 bg-white rounded-lg px-5 py-10  shadow-md">
+          <form onSubmit={submit}>
+            <div>
+              <InputLabel htmlFor="name" value="Name" />
 
-      <form onSubmit={submit}>
-        <div>
-          <InputLabel htmlFor="name" value="Name" />
+              <TextInput
+                id="name"
+                name="name"
+                value={data.name}
+                className="mt-1 block w-full border border-blue-600"
+                autoComplete="name"
+                isFocused={true}
+                onChange={(e) => setData("name", e.target.value)}
+                required
+              />
 
-          <TextInput
-            id="name"
-            name="name"
-            value={data.name}
-            className="mt-1 block w-full"
-            autoComplete="name"
-            isFocused={true}
-            onChange={(e) => setData("name", e.target.value)}
-            required
-          />
+              <InputError message={errors.name} className="mt-2" />
+            </div>
 
-          <InputError message={errors.name} className="mt-2" />
+            <div className="mt-4">
+              <InputLabel htmlFor="email" value="Email" />
+
+              <TextInput
+                id="email"
+                type="email"
+                name="email"
+                value={data.email}
+                className="mt-1 block w-full border border-blue-600"
+                autoComplete="username"
+                onChange={(e) => setData("email", e.target.value)}
+                required
+              />
+
+              <InputError message={errors.email} className="mt-2" />
+            </div>
+
+            <div className="mt-4">
+              <InputLabel htmlFor="password" value="Password" />
+
+              <TextInput
+                id="password"
+                type="password"
+                name="password"
+                value={data.password}
+                className="mt-1 block w-full border border-blue-600"
+                autoComplete="new-password"
+                onChange={(e) => setData("password", e.target.value)}
+                required
+              />
+
+              <InputError message={errors.password} className="mt-2" />
+            </div>
+
+            <div className="mt-4">
+              <InputLabel
+                htmlFor="password_confirmation"
+                value="Confirm Password"
+              />
+
+              <TextInput
+                id="password_confirmation"
+                type="password"
+                name="password_confirmation"
+                value={data.password_confirmation}
+                className="mt-1 block w-full border border-blue-600"
+                autoComplete="new-password"
+                onChange={(e) =>
+                  setData("password_confirmation", e.target.value)
+                }
+                required
+              />
+
+              <InputError
+                message={errors.password_confirmation}
+                className="mt-2"
+              />
+            </div>
+
+            <div className="mt-4 flex items-center justify-end">
+              <Link href={route("login")} className="link mr-3">
+                Already registered?
+              </Link>
+
+              <PrimaryButton
+                className="ms-4 border border-blue-600"
+                disabled={processing}
+              >
+                Register
+              </PrimaryButton>
+            </div>
+          </form>
         </div>
-
-        <div className="mt-4">
-          <InputLabel htmlFor="email" value="Email" />
-
-          <TextInput
-            id="email"
-            type="email"
-            name="email"
-            value={data.email}
-            className="mt-1 block w-full"
-            autoComplete="username"
-            onChange={(e) => setData("email", e.target.value)}
-            required
-          />
-
-          <InputError message={errors.email} className="mt-2" />
-        </div>
-
-        <div className="mt-4">
-          <InputLabel htmlFor="password" value="Password" />
-
-          <TextInput
-            id="password"
-            type="password"
-            name="password"
-            value={data.password}
-            className="mt-1 block w-full"
-            autoComplete="new-password"
-            onChange={(e) => setData("password", e.target.value)}
-            required
-          />
-
-          <InputError message={errors.password} className="mt-2" />
-        </div>
-
-        <div className="mt-4">
-          <InputLabel
-            htmlFor="password_confirmation"
-            value="Confirm Password"
-          />
-
-          <TextInput
-            id="password_confirmation"
-            type="password"
-            name="password_confirmation"
-            value={data.password_confirmation}
-            className="mt-1 block w-full"
-            autoComplete="new-password"
-            onChange={(e) => setData("password_confirmation", e.target.value)}
-            required
-          />
-
-          <InputError message={errors.password_confirmation} className="mt-2" />
-        </div>
-
-        <div className="mt-4 flex items-center justify-end">
-          <Link href={route("login")} className="link">
-            Already registered?
-          </Link>
-
-          <PrimaryButton className="ms-4" disabled={processing}>
-            Register
-          </PrimaryButton>
-        </div>
-      </form>
-    </GuestLayout>
+      </section>
+    </AuthenticatedLayout>
   );
 }
